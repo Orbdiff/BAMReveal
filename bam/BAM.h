@@ -1,20 +1,25 @@
 #pragma once
-#include <string>
+#include <windows.h>
 #include <vector>
+#include <string>
 
-class BAMReader {
-public:
-    struct Entry {
-        std::wstring path;
-        std::wstring timestamp;
-        bool isSigned;
-    };
-
-    std::vector<Entry> GetBAMValues();
-
-private:
-    std::wstring ConvertHardDiskVolumeToLetter(const std::wstring& path);
+enum class BamSignature
+{
+    Signed,
+    Unsigned,
+    NotFound,
+    Cheat
 };
 
-bool VerifyFileSignature(const wchar_t* filePath);
-bool VerifySignatureForPath(const std::wstring& path);
+struct BAMEntry
+{
+    std::wstring path;
+    FILETIME     lastExecution;
+    BamSignature signature;
+};
+
+using BamResult = std::vector<BAMEntry>;
+
+std::string WideToUtf8(const std::wstring& w);
+std::wstring FileTimeToString(const FILETIME& ft);
+BamResult ReadBAM();
