@@ -385,11 +385,13 @@ int WINAPI WinMain
     static char g_searchBuffer[256] = {};
     static bool g_afterLogonOnly = false;
     static bool g_showUnsignedCheat = false;
+    static bool g_showNotFound = false;
     static time_t g_logonTime = static_cast<time_t>(GetCurrentUserLogonTime());
 
     static float fadeAlpha = 1.0f;
     static bool lastAfterLogon = g_afterLogonOnly;
     static bool lastShowUnsigned = g_showUnsignedCheat;
+    static bool lastShowNotFound = g_showNotFound;
     static std::string lastSearch;
 
     static int selectedRow = -1;
@@ -429,6 +431,8 @@ int WINAPI WinMain
             const float minLoadingDuration = 1.0f;
             const float fadeOutSpeed = 2.0f;
 
+            ImGuiIO& io = ImGui::GetIO();
+
             if (loadingStartTime == 0.0)
                 loadingStartTime = ImGui::GetTime();
 
@@ -442,23 +446,23 @@ int WINAPI WinMain
             const int particleCount = 100;
             for (int i = 0; i < particleCount; ++i)
             {
-                float seed = i * 17.23f;
+                float seed = i * 13.37f;
                 float ft = static_cast<float>(t);
-                float x = pos.x + fmodf(seed * 41.0f + ft * 25.0f, size.x);
-                float y = pos.y + fmodf(seed * 59.0f + ft * 18.0f, size.y);
-                float alpha = 60.0f + 60.0f * sinf(ft + seed);
-                float radius = 1.0f + 1.0f * sinf(ft + seed * 0.5f);
-                draw_list->AddCircleFilled(ImVec2(x, y), radius, IM_COL32(255, 220, 120, (int)alpha));
+                float x = pos.x + fmodf(seed * 37.0f + ft * 20.0f, size.x);
+                float y = pos.y + fmodf(seed * 53.0f + ft * 15.0f, size.y);
+                float alpha = 80.0f + 80.0f * sinf(ft + seed);
+                float radius = 1.5f + 1.0f * sinf(ft + seed * 0.5f);
+                draw_list->AddCircleFilled(ImVec2(x, y), radius, IM_COL32(180, 120, 255, (int)alpha));
             }
 
             float baseRadius = 32.0f;
             float pulse = 0.9f + 0.1f * sinf(static_cast<float>(t) * 2.5f);
             float radius = baseRadius * pulse;
 
-            ImU32 ringColors[3] = { IM_COL32(255,200,100,220), IM_COL32(255,160,50,200), IM_COL32(220,120,30,180) };
+            ImU32 ringColors[3] = { IM_COL32(200, 120, 255, 220), IM_COL32(160, 80, 255, 200), IM_COL32(120, 50, 220, 180) };
             for (int i = 0; i < 3; ++i)
             {
-                float angle = static_cast<float>(t * 2.2 + i * 1.4);
+                float angle = static_cast<float>(t * 2.2 + i * 1.5f);
                 draw_list->PathArcTo(center, radius - i * 6.0f, angle, angle + 1.6f, 48);
                 draw_list->PathStroke(ringColors[i], false, 3.5f);
             }
@@ -469,9 +473,9 @@ int WINAPI WinMain
 
             float textPulse = 0.85f + 0.15f * sinf(static_cast<float>(t) * 2.0f);
             int alpha = static_cast<int>(textPulse * 255.0f * fadeOutAlpha);
-            if (alpha < 100) alpha = 100;
+            if (alpha < 120) alpha = 120;
 
-            draw_list->AddText(textPos, IM_COL32(255, 80, 80, alpha), loadingText);
+            draw_list->AddText(textPos, IM_COL32(220, 180, 255, alpha), loadingText);
 
             if (!g_Loading && (ImGui::GetTime() - loadingStartTime) >= minLoadingDuration)
             {
@@ -489,13 +493,17 @@ int WINAPI WinMain
             ImGui::PopItemWidth();
 
             ImGui::SameLine(0, 10);
-            ImGui::Checkbox("Show in Instance", &g_afterLogonOnly);
+            ImGui::Checkbox("In Instance", &g_afterLogonOnly);
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Show all paths after logon-time");
             ImGui::SameLine(0, 10);
-            ImGui::Checkbox("Show Only Unsigned/Cheat", &g_showUnsignedCheat);
+            ImGui::Checkbox("Show Unsigned/Cheat", &g_showUnsignedCheat);
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Show paths without a signature, cheat signature and yara rules");
+            ImGui::SameLine(0, 10);
+            ImGui::Checkbox("Show Not Found", &g_showNotFound);
+            if (ImGui::IsItemHovered())
+                ImGui::SetTooltip("Show paths with signature Not Found");
 
             float buttonWidth = 160.0f;
             float avail = ImGui::GetContentRegionAvail().x;
@@ -590,6 +598,7 @@ int WINAPI WinMain
             bool filtersChanged =
                 (lastAfterLogon != g_afterLogonOnly) ||
                 (lastShowUnsigned != g_showUnsignedCheat) ||
+                (lastShowNotFound != g_showNotFound) ||
                 (lastSearch != currentSearch);
 
             if (filtersChanged)
@@ -597,12 +606,12 @@ int WINAPI WinMain
                 fadeAlpha = 0.0f;
                 lastAfterLogon = g_afterLogonOnly;
                 lastShowUnsigned = g_showUnsignedCheat;
+                lastShowNotFound = g_showNotFound;
                 lastSearch = currentSearch;
             }
 
             fadeAlpha += io.DeltaTime * 2.0f;
             if (fadeAlpha > 1.0f) fadeAlpha = 1.0f;
-
             ImGui::PushStyleVar(ImGuiStyleVar_Alpha, fadeAlpha);
 
             std::vector<BAMEntryUI> filteredBam;
@@ -611,10 +620,12 @@ int WINAPI WinMain
                 if (g_afterLogonOnly && e.execTime < g_logonTime)
                     continue;
 
-                if (g_showUnsignedCheat &&
-                    !(e.signature == BamSignature::Unsigned ||
-                        e.signature == BamSignature::Cheat))
+                if ((g_showUnsignedCheat || g_showNotFound) &&
+                    !((g_showUnsignedCheat && (e.signature == BamSignature::Unsigned || e.signature == BamSignature::Cheat)) ||
+                        (g_showNotFound && e.signature == BamSignature::NotFound)))
+                {
                     continue;
+                }
 
                 if (!currentSearch.empty())
                 {
@@ -926,7 +937,7 @@ int WINAPI WinMain
 
                             ImVec4 pathColor = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
                             if (e.signature == BamSignature::Cheat)
-                                pathColor = ImVec4(1.0f, 0.55f, 0.0f, 1.0f);
+                                pathColor = ImVec4(0.8f, 0.4f, 1.0f, 1.0f);
 
                             ImGui::PushStyleColor(ImGuiCol_Text, pathColor);
                             ImGuiSelectableFlags selectableFlags = ImGuiSelectableFlags_SpanAllColumns;
@@ -965,19 +976,19 @@ int WINAPI WinMain
                             {
                             case BamSignature::Signed:
                                 sigText = "Signed";
-                                sigColor = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+                                sigColor = ImVec4(0.0f, 0.8f, 0.0f, 1.0f);
                                 break;
                             case BamSignature::Unsigned:
                                 sigText = "Unsigned";
-                                sigColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+                                sigColor = ImVec4(1.0f, 0.4f, 0.4f, 1.0f);
                                 break;
                             case BamSignature::Cheat:
                                 sigText = "Cheat";
-                                sigColor = ImVec4(1.0f, 0.55f, 0.0f, 1.0f);
+                                sigColor = ImVec4(0.8f, 0.4f, 1.0f, 1.0f);
                                 break;
                             default:
                                 sigText = "Not Found";
-                                sigColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f);
+                                sigColor = ImVec4(1.0f, 0.85f, 0.0f, 1.0f);
                                 break;
                             }
                             ImGui::TextColored(sigColor, "%s", sigText);
