@@ -1,21 +1,22 @@
-#include "bam.h"
+﻿#include "bam.h"
 
 #include <algorithm>
+#include <future>
+#include <unordered_map>
 
 #include "../driver_map/_drive_mapper.h"
 #include "../signature/_signature_parser.h"
 #include "../yara/_yara_scan.hpp"
+#include "usn_reader.h"
 
 std::string WideToUtf8(const std::wstring& w)
 {
     if (w.empty()) return {};
-    int size = WideCharToMultiByte(
-        CP_UTF8, 0, w.data(), (int)w.size(),
+    int size = WideCharToMultiByte(CP_UTF8, 0, w.data(), (int)w.size(),
         nullptr, 0, nullptr, nullptr);
 
     std::string out(size, 0);
-    WideCharToMultiByte(
-        CP_UTF8, 0, w.data(), (int)w.size(),
+    WideCharToMultiByte(CP_UTF8, 0, w.data(), (int)w.size(),
         out.data(), size, nullptr, nullptr);
     return out;
 }
@@ -34,6 +35,36 @@ std::wstring FileTimeToString(const FILETIME& ft)
     return buf;
 }
 
+static std::unordered_map<std::wstring, std::vector<BamReplace>>
+CollectReplacesByPath(const std::wstring& volume)
+{
+    USNJournalReader reader(volume);
+    auto replaces = reader.Run();
+
+    std::unordered_map<std::wstring, std::vector<BamReplace>> map;
+
+    for (const auto& r : replaces)
+    {
+        BamReplace br{};
+        br.type = r.type;
+        br.startTime = r.startTime;
+        br.endTime = r.endTime;
+        br.lastUsn = r.lastUsn;
+
+        for (const auto& ev : r.events)
+        {
+            br.events.push_back({
+                ev.date,
+                ev.reason
+                });
+        }
+
+        map[r.fullPath].push_back(std::move(br));
+    }
+
+    return map;
+}
+
 BamResult ReadBAM()
 {
     constexpr auto BAM_KEY =
@@ -47,6 +78,8 @@ BamResult ReadBAM()
 
     InitGenericRules();
     InitYara();
+
+    auto replacesByPath = CollectReplacesByPath(L"C:");
 
     wchar_t sid[256];
     DWORD sidSize = 256;
@@ -89,7 +122,8 @@ BamResult ReadBAM()
 
             if (e.path.size() > 2 && e.path[1] == L':')
             {
-                auto sig = GetSignatureStatus(e.path);
+                auto futureSig = GetSignatureStatusAsync(e.path);
+                auto sig = futureSig.get();
 
                 if (sig == SignatureStatus::Signed)
                     e.signature = BamSignature::Signed;
@@ -97,6 +131,8 @@ BamResult ReadBAM()
                     e.signature = BamSignature::Unsigned;
                 else if (sig == SignatureStatus::Cheat)
                     e.signature = BamSignature::Cheat;
+                else if (sig == SignatureStatus::Fake)
+                    e.signature = BamSignature::Fake;
 
                 if (e.signature == BamSignature::Unsigned)
                 {
@@ -104,6 +140,12 @@ BamResult ReadBAM()
                     if (FastScanFile(WideToUtf8(e.path), yara))
                         e.signature = BamSignature::Cheat;
                 }
+            }
+
+            auto it = replacesByPath.find(e.path);
+            if (it != replacesByPath.end())
+            {
+                e.replaces = it->second;
             }
 
             out.emplace_back(std::move(e));

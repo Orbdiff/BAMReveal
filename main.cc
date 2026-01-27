@@ -315,49 +315,49 @@ int WINAPI WinMain
     ImGuiStyle& style = ImGui::GetStyle();
     ImVec4* colors = style.Colors;
 
-    colors[ImGuiCol_Text] = ImVec4(0.90f, 0.90f, 0.90f, 1.00f);
-    colors[ImGuiCol_TextDisabled] = ImVec4(0.55f, 0.55f, 0.55f, 1.00f);
-    colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-    colors[ImGuiCol_ChildBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
-    colors[ImGuiCol_PopupBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
+    colors[ImGuiCol_Text] = ImVec4(0.95f, 0.95f, 0.95f, 1.00f);
+    colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+    colors[ImGuiCol_WindowBg] = ImVec4(0.09f, 0.09f, 0.09f, 1.00f);
+    colors[ImGuiCol_ChildBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
+    colors[ImGuiCol_PopupBg] = ImVec4(0.11f, 0.11f, 0.11f, 0.94f);
+    colors[ImGuiCol_Border] = ImVec4(0.19f, 0.19f, 0.19f, 1.00f);
+    colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
     colors[ImGuiCol_FrameBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
-    colors[ImGuiCol_FrameBgHovered] = ImVec4(0.18f, 0.20f, 0.24f, 1.00f);
-    colors[ImGuiCol_FrameBgActive] = ImVec4(0.22f, 0.25f, 0.30f, 1.00f);
-    colors[ImGuiCol_Border] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
-    colors[ImGuiCol_BorderShadow] = ImVec4(0, 0, 0, 0);
-    colors[ImGuiCol_TitleBg] = ImVec4(0.13f, 0.13f, 0.13f, 1.00f);
-    colors[ImGuiCol_TitleBgActive] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
-    colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.10f, 0.10f, 0.10f, 0.90f);
-    colors[ImGuiCol_MenuBarBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
+    colors[ImGuiCol_FrameBgHovered] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+    colors[ImGuiCol_FrameBgActive] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
+    colors[ImGuiCol_TitleBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
+    colors[ImGuiCol_TitleBgActive] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
+    colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.08f, 0.08f, 0.08f, 0.75f);
+    colors[ImGuiCol_MenuBarBg] = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
     colors[ImGuiCol_ScrollbarBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.35f, 0.35f, 0.35f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.35f, 0.60f, 0.95f, 1.00f);
-    colors[ImGuiCol_Button] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
-    colors[ImGuiCol_ButtonHovered] = ImVec4(0.25f, 0.45f, 0.75f, 1.00f);
-    colors[ImGuiCol_ButtonActive] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
-    colors[ImGuiCol_CheckMark] = ImVec4(0.35f, 0.60f, 0.95f, 1.00f);
-    colors[ImGuiCol_SliderGrab] = ImVec4(0.25f, 0.45f, 0.75f, 1.00f);
-    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
-    colors[ImGuiCol_Header] = ImVec4(0.25f, 0.25f, 0.25f, 0.80f);
-    colors[ImGuiCol_HeaderHovered] = ImVec4(0.25f, 0.45f, 0.75f, 0.90f);
-    colors[ImGuiCol_HeaderActive] = ImVec4(0.30f, 0.55f, 0.85f, 0.90f);
+    colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.35f, 0.35f, 0.35f, 1.00f);
+    colors[ImGuiCol_Separator] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+    colors[ImGuiCol_SeparatorHovered] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
+    colors[ImGuiCol_SeparatorActive] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
     colors[ImGuiCol_Tab] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
-    colors[ImGuiCol_TabHovered] = ImVec4(0.25f, 0.45f, 0.75f, 1.00f);
-    colors[ImGuiCol_TabActive] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
+    colors[ImGuiCol_TabHovered] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
+    colors[ImGuiCol_TabActive] = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
     colors[ImGuiCol_TabUnfocused] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
-    colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.20f, 0.30f, 0.45f, 1.00f);
-    colors[ImGuiCol_Separator] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
-    colors[ImGuiCol_SeparatorHovered] = ImVec4(0.25f, 0.45f, 0.75f, 1.00f);
-    colors[ImGuiCol_SeparatorActive] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
-    colors[ImGuiCol_ResizeGrip] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
-    colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.25f, 0.45f, 0.75f, 1.00f);
-    colors[ImGuiCol_ResizeGripActive] = ImVec4(0.30f, 0.55f, 0.85f, 1.00f);
-    colors[ImGuiCol_TableHeaderBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);
-    colors[ImGuiCol_TableBorderStrong] = ImVec4(0.28f, 0.28f, 0.28f, 1.00f);
-    colors[ImGuiCol_TableBorderLight] = ImVec4(0.22f, 0.22f, 0.22f, 1.00f);
-    colors[ImGuiCol_TableRowBg] = ImVec4(0, 0, 0, 0);
-    colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.13f, 0.13f, 0.13f, 1.00f);
+    colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.13f, 0.13f, 0.13f, 1.00f);
+    colors[ImGuiCol_TableHeaderBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
+    colors[ImGuiCol_TableBorderStrong] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
+    colors[ImGuiCol_TableBorderLight] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+    colors[ImGuiCol_TableRowBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
+    colors[ImGuiCol_ResizeGrip] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
+    colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
+    colors[ImGuiCol_ResizeGripActive] = ImVec4(0.35f, 0.35f, 0.35f, 1.00f);
+    colors[ImGuiCol_Button] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
+    colors[ImGuiCol_ButtonHovered] = ImVec4(0.22f, 0.36f, 0.55f, 1.00f);
+    colors[ImGuiCol_ButtonActive] = ImVec4(0.25f, 0.40f, 0.65f, 1.00f);
+    colors[ImGuiCol_CheckMark] = ImVec4(0.35f, 0.55f, 0.80f, 1.00f);
+    colors[ImGuiCol_SliderGrab] = ImVec4(0.25f, 0.40f, 0.65f, 1.00f);
+    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.30f, 0.50f, 0.75f, 1.00f);
+    colors[ImGuiCol_Header] = ImVec4(0.20f, 0.20f, 0.20f, 0.80f);
+    colors[ImGuiCol_HeaderHovered] = ImVec4(0.22f, 0.36f, 0.55f, 0.90f);
+    colors[ImGuiCol_HeaderActive] = ImVec4(0.25f, 0.40f, 0.65f, 0.90f);
 
     style.WindowRounding = 6.0f;
     style.FrameRounding = 4.0f;
@@ -402,6 +402,10 @@ int WINAPI WinMain
     const float minLoadingDuration = 3.0f;
     const float fadeOutSpeed = 2.0f;
 
+    static bool showReplacePopup = false;
+    static BAMEntryUI selectedEntryForReplace{};
+    static float fadeAlphaReplace = 0.0f;
+
     MSG msg{};
     while (msg.message != WM_QUIT)
     {
@@ -416,7 +420,7 @@ int WINAPI WinMain
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        ImGuiWindowFlags windowFlags =ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
+        ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
 
         RECT rect;
         GetClientRect(hwnd, &rect);
@@ -438,44 +442,35 @@ int WINAPI WinMain
 
             ImVec2 pos = ImGui::GetWindowPos();
             ImVec2 size = ImGui::GetWindowSize();
-            ImVec2 center = ImVec2(pos.x + size.x * 0.5f, pos.y + size.y * 0.5f - 20.0f);
+            ImVec2 center = ImVec2(pos.x + size.x * 0.5f, pos.y + size.y * 0.5f);
 
             ImDrawList* draw_list = ImGui::GetWindowDrawList();
-            double t = ImGui::GetTime();
+            float time = (float)ImGui::GetTime();
 
-            const int particleCount = 100;
-            for (int i = 0; i < particleCount; ++i)
-            {
-                float seed = i * 13.37f;
-                float ft = static_cast<float>(t);
-                float x = pos.x + fmodf(seed * 37.0f + ft * 20.0f, size.x);
-                float y = pos.y + fmodf(seed * 53.0f + ft * 15.0f, size.y);
-                float alpha = 80.0f + 80.0f * sinf(ft + seed);
-                float radius = 1.5f + 1.0f * sinf(ft + seed * 0.5f);
-                draw_list->AddCircleFilled(ImVec2(x, y), radius, IM_COL32(180, 120, 255, (int)alpha));
+            float radius = 16.0f;
+            ImVec2 spinnerCenter = ImVec2(center.x, center.y - 25.0f);
+
+            ImU32 purple1 = IM_COL32(180, 120, 255, (int)(220 * fadeOutAlpha));
+            ImU32 purple2 = IM_COL32(160, 100, 220, (int)(180 * fadeOutAlpha));
+            ImU32 purple3 = IM_COL32(140, 80, 200, (int)(150 * fadeOutAlpha));
+
+            int dotCount = 8;
+            for (int i = 0; i < dotCount; i++) {
+                float angle = time * 3.0f + (i * 3.1415926535f * 2.0f / dotCount);
+                float dotRadius = 3.0f + sinf(time * 2.0f + i) * 1.0f;
+
+                float dotX = spinnerCenter.x + cosf(angle) * radius;
+                float dotY = spinnerCenter.y + sinf(angle) * radius;
+
+                ImU32 dotColor = (i % 2 == 0) ? purple1 : purple2;
+                draw_list->AddCircleFilled(ImVec2(dotX, dotY), dotRadius, dotColor);
             }
 
-            float baseRadius = 32.0f;
-            float pulse = 0.9f + 0.1f * sinf(static_cast<float>(t) * 2.5f);
-            float radius = baseRadius * pulse;
-
-            ImU32 ringColors[3] = { IM_COL32(200, 120, 255, 220), IM_COL32(160, 80, 255, 200), IM_COL32(120, 50, 220, 180) };
-            for (int i = 0; i < 3; ++i)
-            {
-                float angle = static_cast<float>(t * 2.2 + i * 1.5f);
-                draw_list->PathArcTo(center, radius - i * 6.0f, angle, angle + 1.6f, 48);
-                draw_list->PathStroke(ringColors[i], false, 3.5f);
-            }
-
-            const char* loadingText = "Parsing BAM...";
+            const char* loadingText = "Parsing BAM Entries";
             ImVec2 textSize = ImGui::CalcTextSize(loadingText);
-            ImVec2 textPos = ImVec2(center.x - textSize.x * 0.5f, center.y + baseRadius + 16.0f);
+            ImVec2 textPos = ImVec2(center.x - textSize.x * 0.5f, center.y + radius - 5.0f);
 
-            float textPulse = 0.85f + 0.15f * sinf(static_cast<float>(t) * 2.0f);
-            int alpha = static_cast<int>(textPulse * 255.0f * fadeOutAlpha);
-            if (alpha < 120) alpha = 120;
-
-            draw_list->AddText(textPos, IM_COL32(220, 180, 255, alpha), loadingText);
+            draw_list->AddText(textPos, IM_COL32(220, 180, 250, (int)(200 * fadeOutAlpha)), loadingText);
 
             if (!g_Loading && (ImGui::GetTime() - loadingStartTime) >= minLoadingDuration)
             {
@@ -487,7 +482,78 @@ int WINAPI WinMain
                     loadingStartTime = 0.0;
                 }
             }
-        } else {
+        }
+        else {
+            if (showReplacePopup)
+            {
+                ImGui::PushStyleColor(ImGuiCol_ModalWindowDimBg, ImVec4(0.0f, 0.0f, 0.0f, 0.6f));
+                ImGui::OpenPopup("Replace Details Modal");
+                ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+                ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+                static bool firstOpen = true;
+                if (firstOpen)
+                {
+                    ImGui::SetNextWindowSize(ImVec2(1000, 600));
+                    firstOpen = false;
+                }
+
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                if (ImGui::BeginPopupModal("Replace Details Modal", &showReplacePopup))
+                {
+                    ImGui::PopStyleColor();
+                    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(20, 20));
+
+                    ImGui::TextColored(ImVec4(0.4f, 1.0f, 0.4f, 1.0f), "File: ");
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImVec4(0.4f, 1.0f, 0.4f, 1.0f), "%s", selectedEntryForReplace.path.c_str());
+
+                    ImGui::Separator();
+
+                    int replaceIndex = 0;
+                    for (const auto& r : selectedEntryForReplace.replaces)
+                    {
+                        ImGui::TextColored(ImVec4(0.5f, 0.8f, 1.0f, 1.0f), "USN: %s", r.lastUsn.c_str());
+                        ImGui::TextColored(ImVec4(0.5f, 0.8f, 1.0f, 1.0f), "Time: %s", r.endTime.c_str());
+                        ImGui::TextColored(ImVec4(0.5f, 0.8f, 1.0f, 1.0f), "Replace: %s", r.type.c_str());
+
+                        if (!r.events.empty())
+                        {
+                            std::string treeId = "Events_" + std::to_string(replaceIndex);
+                            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
+                            if (ImGui::TreeNode(treeId.c_str(), "Events"))
+                            {
+                                ImGui::PopStyleColor();
+                                for (const auto& ev : r.events)
+                                {
+                                    ImGui::Bullet();
+                                    ImGui::SameLine();
+                                    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.4f, 1.0f), "%s - %s",
+                                        ev.date.c_str(),
+                                        ev.reason.c_str());
+                                }
+                                ImGui::TreePop();
+                            }
+                            else
+                            {
+                                ImGui::PopStyleColor();
+                            }
+                        }
+
+                        ImGui::Dummy(ImVec2(0, 15));
+                        replaceIndex++;
+                    }
+
+                    ImGui::PopStyleVar();
+                    ImGui::EndPopup();
+                }
+                else
+                {
+                    ImGui::PopStyleColor();
+                }
+                ImGui::PopStyleColor();
+            }
+
             ImGui::PushItemWidth(300);
             ImGui::InputTextWithHint("##SearchBAM", "Search...", g_searchBuffer, IM_ARRAYSIZE(g_searchBuffer));
             ImGui::PopItemWidth();
@@ -497,9 +563,9 @@ int WINAPI WinMain
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Show all paths after logon-time");
             ImGui::SameLine(0, 10);
-            ImGui::Checkbox("Show Unsigned/Cheat", &g_showUnsignedCheat);
+            ImGui::Checkbox("Show Untrusted", &g_showUnsignedCheat);
             if (ImGui::IsItemHovered())
-                ImGui::SetTooltip("Show paths without a signature, cheat signature and yara rules");
+                ImGui::SetTooltip("Show paths without a signature, cheat signature, fake signature and yara rules");
             ImGui::SameLine(0, 10);
             ImGui::Checkbox("Show Not Found", &g_showNotFound);
             if (ImGui::IsItemHovered())
@@ -621,7 +687,7 @@ int WINAPI WinMain
                     continue;
 
                 if ((g_showUnsignedCheat || g_showNotFound) &&
-                    !((g_showUnsignedCheat && (e.signature == BamSignature::Unsigned || e.signature == BamSignature::Cheat)) ||
+                    !((g_showUnsignedCheat && (e.signature == BamSignature::Unsigned || e.signature == BamSignature::Cheat || e.signature == BamSignature::Fake)) ||
                         (g_showNotFound && e.signature == BamSignature::NotFound)))
                 {
                     continue;
@@ -641,6 +707,7 @@ int WINAPI WinMain
                     case BamSignature::Signed:   sigLower = "signed"; break;
                     case BamSignature::Unsigned: sigLower = "unsigned"; break;
                     case BamSignature::Cheat:    sigLower = "cheat"; break;
+                    case BamSignature::Fake:     sigLower = "fake"; break;
                     default:                     sigLower = "not found"; break;
                     }
 
@@ -791,7 +858,6 @@ int WINAPI WinMain
                         ImGui::EndTable();
                     }
                 }
-
                 ImGui::EndPopup();
             }
             ImGui::PopStyleVar();
@@ -871,7 +937,8 @@ int WINAPI WinMain
             ImGui::PopStyleVar();
 
             if (ImGui::BeginTable("BAMTable", 3,
-                ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY))
+                ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable |
+                ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY))
             {
                 float col0Width = 0.0f;
                 float col2Width = 0.0f;
@@ -886,6 +953,7 @@ int WINAPI WinMain
                     case BamSignature::Signed: sigText = "Signed"; break;
                     case BamSignature::Unsigned: sigText = "Unsigned"; break;
                     case BamSignature::Cheat: sigText = "Cheat"; break;
+                    case BamSignature::Fake: sigText = "Fake"; break;
                     default: sigText = "Not Found"; break;
                     }
                     col2Width = std::max(col2Width, ImGui::CalcTextSize(sigText).x);
@@ -902,114 +970,139 @@ int WINAPI WinMain
                 if (filteredBam.empty())
                 {
                     ImGui::TableNextRow();
-                    ImGui::TableSetColumnIndex(0);
-                    ImGui::TextUnformatted("");
                     ImGui::TableSetColumnIndex(1);
                     const char* msg = "No BAM entries found.";
                     float cellWidth = ImGui::GetContentRegionAvail().x;
                     float textWidth = ImGui::CalcTextSize(msg).x;
-                    float textPosX = (cellWidth - textWidth) * 0.5f;
-                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + textPosX);
+                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (cellWidth - textWidth) * 0.5f);
                     ImGui::TextColored(ImVec4(0.8f, 0.4f, 0.4f, 1.0f), "%s", msg);
-                    ImGui::TableSetColumnIndex(2);
-                    ImGui::TextUnformatted("");
-                } else {
-                        for (size_t i = 0; i < filteredBam.size(); i++)
-                        {
-                            const auto& e = filteredBam[i];
-                            ImGui::TableNextRow();
-
-                            ImGui::PushID(static_cast<int>(i));
-
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::TextUnformatted(e.time.c_str());
-
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::BeginGroup();
-
-                            std::wstring wname = StringToWString(e.path);
-                            IconDataDX11* iconPtr = GetOrQueueIcon(g_Device, wname);
-                            if (iconPtr && iconPtr->IsLoaded)
-                            {
-                                ImGui::Image(iconPtr->TextureView.Get(), ImVec2(16, 16));
-                                ImGui::SameLine(0, 5);
-                            }
-
-                            ImVec4 pathColor = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-                            if (e.signature == BamSignature::Cheat)
-                                pathColor = ImVec4(0.8f, 0.4f, 1.0f, 1.0f);
-
-                            ImGui::PushStyleColor(ImGuiCol_Text, pathColor);
-                            ImGuiSelectableFlags selectableFlags = ImGuiSelectableFlags_SpanAllColumns;
-                            if (ImGui::Selectable(e.path.c_str(), selectedRow == (int)i, selectableFlags))
-                                selectedRow = (int)i;
-                            ImGui::PopStyleColor();
-
-                            std::string popupId = "RowPopup_" + std::to_string(i);
-                            if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-                                ImGui::OpenPopup(popupId.c_str());
-
-                            if (ImGui::BeginPopup(popupId.c_str()))
-                            {
-                                if (ImGui::MenuItem("Open Path"))
-                                {
-                                    std::wstring folderPath(e.path.begin(), e.path.end());
-                                    size_t pos = folderPath.find_last_of(L"\\/");
-                                    if (pos != std::wstring::npos)
-                                        folderPath = folderPath.substr(0, pos);
-                                    if (!folderPath.empty())
-                                        ShellExecuteW(NULL, L"explore", folderPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
-                                }
-
-                                if (ImGui::MenuItem("Copy Path"))
-                                    ImGui::SetClipboardText(e.path.c_str());
-
-                                ImGui::EndPopup();
-                            }
-
-                            ImGui::EndGroup();
-
-                            ImGui::TableSetColumnIndex(2);
-                            ImVec4 sigColor;
-                            const char* sigText = nullptr;
-                            switch (e.signature)
-                            {
-                            case BamSignature::Signed:
-                                sigText = "Signed";
-                                sigColor = ImVec4(0.0f, 0.8f, 0.0f, 1.0f);
-                                break;
-                            case BamSignature::Unsigned:
-                                sigText = "Unsigned";
-                                sigColor = ImVec4(1.0f, 0.4f, 0.4f, 1.0f);
-                                break;
-                            case BamSignature::Cheat:
-                                sigText = "Cheat";
-                                sigColor = ImVec4(0.8f, 0.4f, 1.0f, 1.0f);
-                                break;
-                            default:
-                                sigText = "Not Found";
-                                sigColor = ImVec4(1.0f, 0.85f, 0.0f, 1.0f);
-                                break;
-                            }
-                            ImGui::TextColored(sigColor, "%s", sigText);
-
-                            ImGui::PopID();
-                        }
-                    }
-
-                    ImGui::EndTable();
                 }
-                ImGui::PopStyleVar();
+                else
+                {
+                    for (size_t i = 0; i < filteredBam.size(); i++)
+                    {
+                        const auto& e = filteredBam[i];
+                        bool hasReplaces = !e.replaces.empty();
+
+                        ImGui::TableNextRow();
+                        ImGui::PushID((int)i);
+
+                        ImGui::TableSetColumnIndex(0);
+                        ImGui::TextUnformatted(e.time.c_str());
+
+                        ImGui::TableSetColumnIndex(1);
+                        ImGui::BeginGroup();
+
+                        std::wstring wname = StringToWString(e.path);
+                        IconDataDX11* iconPtr = GetOrQueueIcon(g_Device, wname);
+                        if (iconPtr && iconPtr->IsLoaded)
+                        {
+                            ImGui::Image(iconPtr->TextureView.Get(), ImVec2(16, 16));
+                            ImGui::SameLine(0, 5);
+                        }
+
+                        ImVec4 pathColor = ImVec4(1, 1, 1, 1);
+                        if (hasReplaces)
+                            pathColor = ImVec4(1.0f, 0.3f, 0.3f, 1.0f);
+                        else if (e.signature == BamSignature::Cheat)
+                            pathColor = ImVec4(0.8f, 0.4f, 1.0f, 1.0f);
+
+                        ImGui::PushStyleColor(ImGuiCol_Text, pathColor);
+
+                        ImGuiSelectableFlags flags = ImGuiSelectableFlags_SpanAllColumns;
+                        bool clicked = ImGui::Selectable(
+                            e.path.c_str(),
+                            selectedRow == (int)i,
+                            flags
+                        );
+
+                        ImGui::PopStyleColor();
+
+                        if (clicked)
+                            selectedRow = (int)i;
+
+                        if (clicked && hasReplaces)
+                        {
+                            selectedEntryForReplace = e;
+                            showReplacePopup = true;
+                        }
+
+                        std::string popupId = "RowPopup_" + std::to_string(i);
+                        if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+                            ImGui::OpenPopup(popupId.c_str());
+
+                        if (ImGui::BeginPopup(popupId.c_str()))
+                        {
+                            if (ImGui::MenuItem("Open Path"))
+                            {
+                                std::wstring folderPath(e.path.begin(), e.path.end());
+                                size_t pos = folderPath.find_last_of(L"\\/");
+
+                                if (pos != std::wstring::npos)
+                                    folderPath = folderPath.substr(0, pos);
+
+                                if (!folderPath.empty())
+                                    ShellExecuteW(nullptr, L"explore",
+                                        folderPath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+                            }
+
+                            if (ImGui::MenuItem("Copy Path"))
+                                ImGui::SetClipboardText(e.path.c_str());
+
+                            ImGui::EndPopup();
+                        }
+
+                        ImGui::EndGroup();
+
+                        ImGui::TableSetColumnIndex(2);
+                        ImVec4 sigColor;
+                        const char* sigText = nullptr;
+
+                        switch (e.signature)
+                        {
+                        case BamSignature::Signed:
+                            sigText = "Signed";
+                            sigColor = ImVec4(0, 0.8f, 0, 1);
+                            break;
+                        case BamSignature::Unsigned:
+                            sigText = "Unsigned";
+                            sigColor = ImVec4(1, 0.4f, 0.4f, 1);
+                            break;
+                        case BamSignature::Cheat:
+                            sigText = "Cheat";
+                            sigColor = ImVec4(0.8f, 0.4f, 1, 1);
+                            break;
+                        case BamSignature::Fake:
+                            sigText = "Fake Signature";
+                            sigColor = ImVec4(1, 0.6f, 0, 1);
+                            break;
+                        default:
+                            sigText = "Not Found";
+                            sigColor = ImVec4(1, 0.85f, 0, 1);
+                            break;
+                        }
+
+                        ImGui::TextColored(sigColor, "%s", sigText);
+
+                        ImGui::PopID();
+                    }
+                }
+
+                ImGui::EndTable();
             }
 
-        ImGui::End();
-        ImGui::Render();
-        g_Context->OMSetRenderTargets(1, &g_RTV, nullptr);
-        const float clear_color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        g_Context->ClearRenderTargetView(g_RTV, clear_color);
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-        g_SwapChain->Present(1, 0);
+            ImGui::PopStyleVar();
+            }
+
+            ImGui::End();
+            ImGui::Render();
+            g_Context->OMSetRenderTargets(1, &g_RTV, nullptr);
+            const float clear_color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+            g_Context->ClearRenderTargetView(g_RTV, clear_color);
+            ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+            g_SwapChain->Present(1, 0);
     }
 
     g_iconThreadExit = true;
