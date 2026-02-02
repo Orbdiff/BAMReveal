@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <vector>
 #include <string>
+#include "deleted_values.hh"
 
 enum class BamSignature
 {
@@ -38,7 +39,8 @@ struct BAMEntry
 
 using BamResult = std::vector<BAMEntry>;
 
-
 std::string  WideToUtf8(const std::wstring& w);
 std::wstring FileTimeToString(const FILETIME& ft);
 BamResult    ReadBAM();
+
+DeletedBAMEntriesResult GetDeletedBAMEntries(const BamResult& bamResult);

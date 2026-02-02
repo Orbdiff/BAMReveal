@@ -12,7 +12,8 @@
 #include <shlobj.h>
 #include <shellapi.h>
 #include <algorithm>
-#include <wrl/client.h>
+#include <ranges>
+#include <future>
 
 #include "wil/resource.h"
 
@@ -35,6 +36,8 @@ static IDXGISwapChain* g_SwapChain = nullptr;
 static ID3D11RenderTargetView* g_RTV = nullptr;
 using Microsoft::WRL::ComPtr;
 
+const DXGI_FORMAT BACKBUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
+
 std::atomic<bool> g_Loading = false;
 std::vector<BAMEntryUI> g_BamUI;
 static BamThreadInfo g_cachedBamInfo{};
@@ -56,33 +59,35 @@ bool g_iconThreadExit = false;
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+inline void CleanupRenderTarget()
 {
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
-
-    if (msg == WM_DESTROY)
+    if (g_RTV)
     {
-        PostQuitMessage(0);
-        return 0;
+        g_RTV->Release();
+        g_RTV = nullptr;
     }
-    return DefWindowProcW(hWnd, msg, wParam, lParam);
 }
 
 void CreateRenderTarget()
 {
+    if (!g_SwapChain || !g_Device)
+    {
+        OutputDebugStringA("CreateRenderTarget: SwapChain or Device is null.\n");
+        return;
+    }
+
     ComPtr<ID3D11Texture2D> backBuffer;
     HRESULT hr = g_SwapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
     if (FAILED(hr) || !backBuffer)
     {
-        MessageBoxA(nullptr, "Failed to get swap chain back buffer.", "Error", MB_OK | MB_ICONERROR);
+        OutputDebugStringA("Failed to get swap chain back buffer.\n");
         return;
     }
 
     hr = g_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &g_RTV);
     if (FAILED(hr))
     {
-        MessageBoxA(nullptr, "Failed to create render target view.", "Error", MB_OK | MB_ICONERROR);
+        OutputDebugStringA("Failed to create render target view.\n");
     }
 }
 
@@ -90,14 +95,15 @@ void InitD3D(HWND hwnd)
 {
     DXGI_SWAP_CHAIN_DESC sd{};
     sd.BufferCount = 2;
-    sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    sd.BufferDesc.Format = BACKBUFFER_FORMAT;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = hwnd;
     sd.SampleDesc.Count = 1;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    D3D11CreateDeviceAndSwapChain(
+    HRESULT hr = D3D11CreateDeviceAndSwapChain(
         nullptr,
         D3D_DRIVER_TYPE_HARDWARE,
         nullptr,
@@ -111,6 +117,12 @@ void InitD3D(HWND hwnd)
         nullptr,
         &g_Context
     );
+
+    if (FAILED(hr))
+    {
+        OutputDebugStringA("Failed to create D3D device and swap chain.\n");
+        return;
+    }
 
     CreateRenderTarget();
 }
@@ -268,6 +280,46 @@ std::string ws2s(const std::wstring& wstr)
     return result;
 }
 
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+
+    switch (msg)
+    {
+    case WM_SIZE:
+        if (g_SwapChain && g_Context && wParam != SIZE_MINIMIZED)
+        {
+            CleanupRenderTarget();
+            g_Context->OMSetRenderTargets(0, nullptr, nullptr);
+
+            UINT newWidth = LOWORD(lParam);
+            UINT newHeight = HIWORD(lParam);
+            HRESULT hr = g_SwapChain->ResizeBuffers(0, newWidth, newHeight, BACKBUFFER_FORMAT, 0);
+
+            if (SUCCEEDED(hr))
+            {
+                CreateRenderTarget();
+            }
+            else
+            {
+                OutputDebugStringA("Failed to resize swap chain. Attempting recovery...\n");
+                InitD3D(hWnd);
+            }
+        }
+        return 0;
+
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+
+    default:
+        break;
+    }
+
+    return DefWindowProcW(hWnd, msg, wParam, lParam);
+}
+
 int WINAPI WinMain
 (
     _In_ HINSTANCE hInstance,
@@ -301,6 +353,12 @@ int WINAPI WinMain
     UpdateWindow(hwnd);
 
     InitD3D(hwnd);
+
+    for (const auto& entry : g_BamUI)
+    {
+        std::wstring wpath = StringToWString(entry.path);
+        EnsureIconLoadedAsync(g_Device, wpath);
+    }
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -432,8 +490,7 @@ int WINAPI WinMain
         {
             static double loadingStartTime = 0.0;
             static float fadeOutAlpha = 1.0f;
-            const float minLoadingDuration = 1.0f;
-            const float fadeOutSpeed = 2.0f;
+            const float fadeOutSpeed = 5.0f;
 
             ImGuiIO& io = ImGui::GetIO();
 
@@ -472,7 +529,7 @@ int WINAPI WinMain
 
             draw_list->AddText(textPos, IM_COL32(220, 180, 250, (int)(200 * fadeOutAlpha)), loadingText);
 
-            if (!g_Loading && (ImGui::GetTime() - loadingStartTime) >= minLoadingDuration)
+            if (!g_Loading)
             {
                 fadeOutAlpha -= io.DeltaTime * fadeOutSpeed;
                 if (fadeOutAlpha <= 0.0f)
@@ -588,7 +645,8 @@ int WINAPI WinMain
                 fadeAlphaDeletedBam = 0.0f;
 
                 std::thread([] {
-                    DeletedBAMEntriesResult result = FindDeletedBAMEntriesInSystemHive();
+                    auto bamResult = ReadBAM();
+                    DeletedBAMEntriesResult result = GetDeletedBAMEntries(bamResult);
 
                     {
                         std::lock_guard<std::mutex> lock(deletedBamMutex);
