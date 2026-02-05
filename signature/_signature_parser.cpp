@@ -354,14 +354,9 @@ SignatureStatus GetSignatureStatus(const std::wstring& path) {
                 CertFreeCertificateContext(signingCert);
             }
             else {
-                if (VerifyFileViaCatalog(path)) {
-                    status = SignatureStatus::Signed;
-                }
-                else {
                     status = SignatureStatus::Unsigned;
                 }
             }
-        }
         else {
             status = SignatureStatus::Signed;
         }
