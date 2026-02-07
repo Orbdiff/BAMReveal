@@ -157,7 +157,7 @@ BamResult ReadBAM()
                 continue;
 
             std::wstring rawPath = value;
-            if (!rawPath.starts_with(L"\\Device\\"))
+            if (!rawPath.starts_with(L"\\Device\\") && !rawPath.starts_with(L"Microsoft") && !rawPath.starts_with(L"Windows"))
                 continue;
 
             BAMEntry e{};

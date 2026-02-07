@@ -760,13 +760,20 @@ int WINAPI WinMain
                     std::transform(timeLower.begin(), timeLower.end(), timeLower.begin(), ::tolower);
 
                     std::string sigLower;
-                    switch (e.signature)
+                    if (e.path.find("Windows") == 0 || e.path.find("Microsoft") == 0)
                     {
-                    case BamSignature::Signed:   sigLower = "signed"; break;
-                    case BamSignature::Unsigned: sigLower = "unsigned"; break;
-                    case BamSignature::Cheat:    sigLower = "cheat"; break;
-                    case BamSignature::Fake:     sigLower = "fake"; break;
-                    default:                     sigLower = "not found"; break;
+                        sigLower = "package";
+                    }
+                    else
+                    {
+                        switch (e.signature)
+                        {
+                        case BamSignature::Signed:   sigLower = "signed"; break;
+                        case BamSignature::Unsigned: sigLower = "unsigned"; break;
+                        case BamSignature::Cheat:    sigLower = "cheat"; break;
+                        case BamSignature::Fake:     sigLower = "fake"; break;
+                        default:                     sigLower = "not found"; break;
+                        }
                     }
 
                     if (pathLower.find(currentSearch) == std::string::npos &&
@@ -1006,13 +1013,20 @@ int WINAPI WinMain
                     col0Width = std::max(col0Width, ImGui::CalcTextSize(e.time.c_str()).x);
 
                     const char* sigText = nullptr;
-                    switch (e.signature)
+                    if (e.path.find("Windows") == 0 || e.path.find("Microsoft") == 0)
                     {
-                    case BamSignature::Signed: sigText = "Signed"; break;
-                    case BamSignature::Unsigned: sigText = "Unsigned"; break;
-                    case BamSignature::Cheat: sigText = "Cheat"; break;
-                    case BamSignature::Fake: sigText = "Fake"; break;
-                    default: sigText = "Not Found"; break;
+                        sigText = "Package";
+                    }
+                    else
+                    {
+                        switch (e.signature)
+                        {
+                        case BamSignature::Signed: sigText = "Signed"; break;
+                        case BamSignature::Unsigned: sigText = "Unsigned"; break;
+                        case BamSignature::Cheat: sigText = "Cheat"; break;
+                        case BamSignature::Fake: sigText = "Fake"; break;
+                        default: sigText = "Not Found"; break;
+                        }
                     }
                     col2Width = std::max(col2Width, ImGui::CalcTextSize(sigText).x);
                 }
@@ -1116,28 +1130,36 @@ int WINAPI WinMain
                         ImVec4 sigColor;
                         const char* sigText = nullptr;
 
-                        switch (e.signature)
+                        if (e.path.find("Windows") == 0 || e.path.find("Microsoft") == 0)
                         {
-                        case BamSignature::Signed:
-                            sigText = "Signed";
-                            sigColor = ImVec4(0, 0.8f, 0, 1);
-                            break;
-                        case BamSignature::Unsigned:
-                            sigText = "Unsigned";
-                            sigColor = ImVec4(1, 0.4f, 0.4f, 1);
-                            break;
-                        case BamSignature::Cheat:
-                            sigText = "Cheat";
-                            sigColor = ImVec4(0.8f, 0.4f, 1, 1);
-                            break;
-                        case BamSignature::Fake:
-                            sigText = "Fake Signature";
-                            sigColor = ImVec4(1, 0.6f, 0, 1);
-                            break;
-                        default:
-                            sigText = "Not Found";
-                            sigColor = ImVec4(1, 0.85f, 0, 1);
-                            break;
+                            sigText = "Package";
+                            sigColor = ImVec4(0.25f, 0.75f, 0.95f, 1.0f);
+                        }
+                        else
+                        {
+                            switch (e.signature)
+                            {
+                            case BamSignature::Signed:
+                                sigText = "Signed";
+                                sigColor = ImVec4(0, 0.8f, 0, 1);
+                                break;
+                            case BamSignature::Unsigned:
+                                sigText = "Unsigned";
+                                sigColor = ImVec4(1, 0.4f, 0.4f, 1);
+                                break;
+                            case BamSignature::Cheat:
+                                sigText = "Cheat";
+                                sigColor = ImVec4(0.8f, 0.4f, 1, 1);
+                                break;
+                            case BamSignature::Fake:
+                                sigText = "Fake Signature";
+                                sigColor = ImVec4(1, 0.6f, 0, 1);
+                                break;
+                            default:
+                                sigText = "Not Found";
+                                sigColor = ImVec4(1, 0.85f, 0, 1);
+                                break;
+                            }
                         }
 
                         ImGui::TextColored(sigColor, "%s", sigText);
