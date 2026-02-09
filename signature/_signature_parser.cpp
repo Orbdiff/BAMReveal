@@ -483,28 +483,6 @@ std::string ComputeFileHeaderHash(const BYTE* buffer, DWORD bufferSize)
     return hashStr;
 }
 
-bool IsPEFile(const BYTE* buffer, DWORD bufferSize) {
-    if (!buffer || bufferSize < 2)
-        return false;
-
-    if (buffer[0] != 'M' || buffer[1] != 'Z')
-        return false;
-
-    if (bufferSize < 0x40)
-        return false;
-
-    DWORD e_lfanew = *reinterpret_cast<const DWORD*>(buffer + 0x3C);
-    if (e_lfanew + 0x18 + sizeof(IMAGE_FILE_HEADER) > bufferSize)
-        return false;
-
-    const BYTE* peHeader = buffer + e_lfanew;
-    if (!(peHeader[0] == 'P' && peHeader[1] == 'E' && peHeader[2] == 0 && peHeader[3] == 0))
-        return false;
-
-    auto* fileHeader = reinterpret_cast<const IMAGE_FILE_HEADER*>(peHeader + 4);
-    return fileHeader->NumberOfSections > 0 && fileHeader->NumberOfSections <= 96;
-}
-
 std::optional<PCCERT_CONTEXT> GetSignerCertificate(const std::wstring& filePath)
 {
     HCERTSTORE hStore = nullptr;
@@ -585,7 +563,7 @@ std::vector<std::future<SignatureStatus>> GetSignatureStatusesAsync(const std::v
     return results;
 }
 
-SignatureStatus GetSignatureStatus(const std::wstring& path, bool checkFake)
+SignatureStatus GetSignatureStatus(const std::wstring& path)
 {
     {
         std::shared_lock<std::shared_mutex> lock(g_signatureMutex);
@@ -633,15 +611,7 @@ SignatureStatus GetSignatureStatus(const std::wstring& path, bool checkFake)
         }
     }
 
-    SignatureStatus status;
-    if (IsPEFile(headerBuf, headerRead))
-    {
-        status = CheckDigitalSignature(path);
-    }
-    else
-    {
-        status = SignatureStatus::Signed;
-    }
+    SignatureStatus status = CheckDigitalSignature(path);
 
     {
         std::unique_lock<std::shared_mutex> lock(g_signatureMutex);
@@ -653,11 +623,6 @@ SignatureStatus GetSignatureStatus(const std::wstring& path, bool checkFake)
     }
 
     return status;
-}
-
-SignatureStatus GetSignatureStatusWithoutFake(const std::wstring& path)
-{
-    return GetSignatureStatus(path, false);
 }
 
 std::future<SignatureStatus> GetSignatureStatusAsync(const std::wstring& path)
