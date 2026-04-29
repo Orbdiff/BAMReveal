@@ -1,1 +1,0 @@
-﻿// thanks spokwn for code :)
